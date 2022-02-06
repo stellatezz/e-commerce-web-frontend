@@ -14,6 +14,8 @@ export default function Home() {
     <BrowserRouter>
       <div>
         <NavBar />
+        checkout
+        hi
         <Container fluid>
           <Row>
           <Col xs={2}><CategoryNav categories={categories} /></Col>
