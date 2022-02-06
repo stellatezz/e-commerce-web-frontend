@@ -1,11 +1,18 @@
 # Getting Started
 
-This project is written for IERG4120 assignment
+This project is written for IERG4120 assignment in React.JS and Boostrap
+## Install
+You need dependencies below.
+
+* npm
 
 ## Available Scripts
 
 In the project directory, you can run:
 
+### `npm install`
+
+Install necessary package for the project
 ### `npm start`
 
 Runs the app in the development mode.\
