@@ -1,4 +1,4 @@
-import { Navbar, Container, Card, Popover, Button, Row, Col, Form } from 'react-bootstrap'
+import { Navbar, Container, Card, Button, Row, Col, Form } from 'react-bootstrap'
 import './style.css'
 
 export default function NavBar({ category }) {
