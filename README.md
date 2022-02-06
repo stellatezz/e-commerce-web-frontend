@@ -1,6 +1,6 @@
 # Getting Started
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is written for IERG4120 assignment
 
 ## Available Scripts
 
