@@ -1,0 +1,22 @@
+.container {
+    width: 30%;
+    height: 40%;
+}
+
+/* Resize images */
+.container img {
+    width: 100%;
+    height: auto;
+}
+
+.productDetail {
+    margin-left: 10%;
+}
+
+.productDetail-upper {
+    margin-bottom: 20%;
+}
+
+.productDetail-status {
+    font-weight: bold;
+}

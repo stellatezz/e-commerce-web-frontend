@@ -1,0 +1,32 @@
+.navContainer {
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.ShoppingList .ShoppingList-hide {
+    display:none;
+    position:absolute;
+    margin-top:-20px;
+    margin-left:-150px;
+    width: 350px;
+    z-index:1
+}
+
+.ShoppingList:hover .ShoppingList-hide {
+    display:inline-block;
+}
+
+.ShoppingList-hide {
+    margin-right: 100px;
+}
+
+.ShoppingList-checkout {
+    margin-top: 10px;
+    margin-left: 200px;
+}
+
+.ShoppingList-title {
+    margin-bottom: 5px;
+    font-weight: bold;
+}

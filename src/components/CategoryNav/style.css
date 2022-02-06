@@ -1,0 +1,11 @@
+.navItem {
+    color: #333333;
+    margin-left: 25%;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+a { 
+    text-decoration: none !important;
+}
