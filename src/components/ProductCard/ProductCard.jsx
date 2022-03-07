@@ -6,11 +6,11 @@ export default function ProductCard({ product }) {
     return (
         <div>
             <Card className='Card'>
-                <Link to={`/products/${product.id}`} key={product.id}>
-                    <Card.Img variant="top" src={require(`../../assets/images/${product.image}`)}/>
+                <Link to={`/home/products/${product.pid}`} key={product.pid}>
+                    <Card.Img variant="top" src={`http://localhost:8000/storage/product/image/${product.image}`}/>
                 </Link>
                 <Card.Body>
-                    <Link to={`/products/${product.id}`} key={product.id}>
+                    <Link to={`/home/products/${product.pid}`} key={product.pid}>
                         <Card.Title>{product.name}</Card.Title>
                     </Link>
                     <Card.Text>

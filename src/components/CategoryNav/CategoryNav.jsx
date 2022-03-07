@@ -14,12 +14,12 @@ export default function CategoryNav({ categories, onSelectCategory }) {
                     </Link>
                 </Nav.Item>
                 {categories.map((category) => (
-                    <Nav.Item key={category.id}>
-                        <Link to={`/categories/${category.id}`} key={category.id}>
+                    <Nav.Item key={category.catid}>
+                        <a href={`/home/categories/${category.catid}`} key={category.catid}>
                             <div className='navItem'>
                                 {category.name.toString()}
                             </div>
-                        </Link>
+                        </a>
                     </Nav.Item>
                 ))}
             </Nav>
