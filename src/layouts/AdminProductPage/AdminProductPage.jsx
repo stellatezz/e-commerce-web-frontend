@@ -12,7 +12,7 @@ export default function AdminProductPage() {
   },[])
 
   const fetchProducts = async () => {
-      await axios.get(`http://localhost:8000/api/products`).then(({data})=>{
+      await axios.get(`https://secure.s37.ierg4210.ie.cuhk.edu.hk:3000/api/products`).then(({data})=>{
           setProducts(data)
       })
   }
@@ -36,8 +36,8 @@ export default function AdminProductPage() {
                 as="li"
                 className="d-flex justify-content-between align-items-start"
               >
-              <div class="thumbnail">
-                <Image src={`http://localhost:8000/storage/product/thumbnail/${product.thumbnail}`}/>
+              <div className="thumbnail">
+                <Image src={`https://secure.s37.ierg4210.ie.cuhk.edu.hk:3000/storage/product/thumbnail/${product.thumbnail}`}/>
               </div>
               <div className="ms-2 me-auto">
                 <div className="fw-bold">{product.name}</div>

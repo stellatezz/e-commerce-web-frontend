@@ -1,4 +1,5 @@
 import { Navbar, Container } from 'react-bootstrap'
+import { Link } from "react-router-dom";  
 
 export default function AdminNavBar({ category }) {
 
@@ -6,7 +7,11 @@ export default function AdminNavBar({ category }) {
         <div className='navContainer'>
             <Navbar bg="light">
             <Container>
-                <Navbar.Brand href="/home">IERG4210 Shop</Navbar.Brand>
+                <Link to="/home">
+                    <div>
+                        IERG4210 Shop
+                    </div>
+                </Link>
                 <Navbar.Collapse className="justify-content-end">
                     <Navbar.Text>
                         Hello Admin

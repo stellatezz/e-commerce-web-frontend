@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Row, Container, Button, Form, InputGroup } from 'react-bootstrap';
 import { useNavigate, useParams } from "react-router-dom";
+import { AuthStateContext } from "../../../contexts/Auth";
 import axios from 'axios';
 
 export default function CategoryEditForm() {
+  const { csrfNonce } = useContext(AuthStateContext);
   const [Name, setName] = useState("");
   const [catergory, setCatergory] = useState("");
   const [loading, setLoading] = useState(true)
@@ -16,7 +18,7 @@ export default function CategoryEditForm() {
 
   const fetchCategory = async () => {
         setLoading(true);
-        await axios.get(`http://localhost:8000/api/categories/${params.categoryId}`).then(({data})=>{
+        await axios.get(`https://secure.s37.ierg4210.ie.cuhk.edu.hk:3000/api/categories/${params.categoryId}`).then(({data})=>{
             setCatergory(data);
             setName(data[0].name);
         })
@@ -28,9 +30,10 @@ export default function CategoryEditForm() {
     formData.append('name', Name);
 
     try {
-      const response = await axios({
+      await axios({
         method: "post",
-        url: `http://localhost:8000/api/categories/${params.categoryId}`,
+        withCredentials: true,
+        url: `https://secure.s37.ierg4210.ie.cuhk.edu.hk:3000/api/categories/${params.categoryId}`,
         data: formData,
         headers: { "Content-Type": "multipart/form-data", "Accept": "application/json" },
       }).then(({data})=>{
@@ -44,9 +47,10 @@ export default function CategoryEditForm() {
 
   let deleteCategory = async () => {
     try {
-        const response = await axios({
-          method: "delete",
-          url: `http://localhost:8000/api/categories/${params.categoryId}`,
+        await axios({
+          method: "post",
+          withCredentials: true,
+          url: `https://secure.s37.ierg4210.ie.cuhk.edu.hk:3000/api/categories/delete/${params.categoryId}`,
           headers: { "Content-Type": "multipart/form-data", "Accept": "application/json" },
         }).then(({data})=>{
             navigate("/admin/categories");
@@ -79,6 +83,7 @@ export default function CategoryEditForm() {
             </Form.Group>
             <Button variant="dark" onClick={saveCategory}>Save</Button>
             <Button variant="red" onClick={deleteCategory}>Delete</Button>
+            <input type="hidden" name="csrf-nonce" value={csrfNonce}></input>
         </Form>
         </Row>
       </Container>

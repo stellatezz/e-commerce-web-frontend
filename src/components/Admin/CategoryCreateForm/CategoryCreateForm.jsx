@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Row, Container, Button, Form, InputGroup } from 'react-bootstrap';
 import { useNavigate} from "react-router-dom";
+import { AuthStateContext } from "../../../contexts/Auth";
 import axios from 'axios';
 
 export default function CategoryCreateForm() {
+  const { csrfNonce } = useContext(AuthStateContext);
   const [Name, setName] = useState("");
   let navigate = useNavigate();
 
@@ -14,8 +16,9 @@ export default function CategoryCreateForm() {
 
     try {
       const response = await axios({
+        withCredentials: true,
         method: "post",
-        url: "http://localhost:8000/api/categories",
+        url: "https://secure.s37.ierg4210.ie.cuhk.edu.hk:3000/api/categories",
         data: formData,
         headers: { "Content-Type": "multipart/form-data", "Accept": "application/json" },
       }).then(({data})=>{
@@ -41,6 +44,7 @@ export default function CategoryCreateForm() {
                 }}/>
             </Form.Group>
             <Button variant="dark" onClick={createCategory}>Create</Button>
+            <input type="hidden" name="csrf-nonce" value={csrfNonce}></input>
         </Form>
         </Row>
       </Container>

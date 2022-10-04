@@ -1,7 +1,7 @@
 import { Nav } from 'react-bootstrap'
 import { Link } from "react-router-dom";  
 
-export default function AdminSideNav() {
+export default function UserSideNav() {
     return (
         <div>
             <Nav className="flex-column">
@@ -13,33 +13,26 @@ export default function AdminSideNav() {
                     </Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Link to="/admin">
+                    <Link to="/user/orders">
                         <div className='navItem'>
-                            Admin Main
+                            View Orders
                         </div>
                     </Link>
                 </Nav.Item>
-                <Nav.Item >
+                <Nav.Item>
+                    <Link to="/user/changepw">
+                        <div className='navItem'>
+                            Change Password
+                        </div>
+                    </Link>
+                </Nav.Item>
+                {/* <Nav.Item >
                     <Link to={`/admin/products`}>
                         <div className='navItem'>
-                            Manage Product
+                            Logout
                         </div>
                     </Link>
-                </Nav.Item>
-                <Nav.Item >
-                    <Link to={`/admin/categories`}>
-                        <div className='navItem'>
-                            Manage Category
-                        </div>
-                    </Link>
-                </Nav.Item>
-                <Nav.Item >
-                    <Link to={`/admin/orders`}>
-                        <div className='navItem'>
-                            Manage Order
-                        </div>
-                    </Link>
-                </Nav.Item>
+                </Nav.Item> */}
             </Nav>
         </div>
     )

@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Row, Container, Button, Form, InputGroup } from 'react-bootstrap';
 import { useNavigate, useParams } from "react-router-dom";
+import { AuthStateContext } from "../../../contexts/Auth";
 import axios from 'axios';
 
 export default function ProductEditForm() {
+  const { csrfNonce } = useContext(AuthStateContext);
   const [Image, setImage] = useState();
   const [Name, setName] = useState("");
   const [Catergory, setCatergory] = useState("");
@@ -11,35 +13,47 @@ export default function ProductEditForm() {
   const [Stock, setStock] = useState("");
   const [Description, setDescription] = useState("");
   const [categories, setCategories] = useState([])
-  const [product, setProduct] = useState([])
+  const [product, setProduct] = useState([{name:'', catid:'', price:'', stock: '', image: ''}])
   const [loading, setLoading] = useState(true)
   let navigate = useNavigate();
   let params = useParams();
+  const [ImagePreviewUrl, setImagePreviewUrl] = useState();
+  const [Warning, setWarning] = useState("");
 
   useEffect(()=>{
+      fetchCategories();
       fetchProduct();
   },[])
 
   const fetchProduct = async () => {
-        setLoading(true);
-        await axios.get(`http://localhost:8000/api/products/${params.productId}`).then(({data})=>{
-            setProduct(data);
-            setCatergory(data[0].catid);
-            setDescription(data[0].description);
-            setStock(data[0].stock);
-            setPrice(data[0].price);
-            setName(data[0].name);
-        })
-        setLoading(false);
-  }
+    setLoading(true);
+    await axios.get(`https://secure.s37.ierg4210.ie.cuhk.edu.hk:3000/api/products/${params.productId}`).then(({data})=>{
+        setProduct(data);
+        setCatergory(data[0].catid);
+        setDescription(data[0].description);
+        setStock(data[0].stock);
+        setPrice(data[0].price);
+        setName(data[0].name);
+    })
+    setLoading(false);
+}
 
-  useEffect(()=>{
-      fetchCategories();
-  },[])
+  function PerviewImage() {
+    if (ImagePreviewUrl) {
+      return (
+        <div>
+          Preview:
+          <br/>
+          <img className="previewImage" src={ImagePreviewUrl} alt="preview"/>
+        </div>
+      );
+    }
+    return <div></div>
+  }
 
   const fetchCategories = async () => {
         setLoading(true);
-        await axios.get(`http://localhost:8000/api/categories`).then(({data})=>{
+        await axios.get(`https://secure.s37.ierg4210.ie.cuhk.edu.hk:3000/api/categories`).then(({data})=>{
             setCategories(data);
         })
         setLoading(false);
@@ -57,9 +71,10 @@ export default function ProductEditForm() {
         formData.append('image', Image);
     }
     try {
-      const response = await axios({
+      await axios({
         method: "post",
-        url: `http://localhost:8000/api/products/${params.productId}`,
+        withCredentials: true,
+        url: `https://secure.s37.ierg4210.ie.cuhk.edu.hk:3000/api/products/${params.productId}`,
         data: formData,
         headers: { "Content-Type": "multipart/form-data", "Accept": "application/json" },
       }).then(({data})=>{
@@ -72,10 +87,12 @@ export default function ProductEditForm() {
   };
 
   let deleteProduct = async () => {
+    
     try {
-        const response = await axios({
-          method: "delete",
-          url: `http://localhost:8000/api/products/${params.productId}`,
+        await axios({
+          method: "post",
+          withCredentials: true,
+          url: `https://secure.s37.ierg4210.ie.cuhk.edu.hk:3000/api/products/delete/${params.productId}`,
           headers: { "Content-Type": "multipart/form-data", "Accept": "application/json" },
         }).then(({data})=>{
             navigate("/admin/products");
@@ -137,14 +154,28 @@ export default function ProductEditForm() {
                   setDescription(event.target.value)
                 }}/>
             </Form.Group>
-            <Form.Group controlId="Image" className="mb-3">
-                <Form.Label>Image</Form.Label>
-                <Form.Control type="file" placeholder={product[0].image} onChange={(event)=>{
-                  setImage(event.target.files[0]);
-                }} />
-            </Form.Group>
+            <PerviewImage />
+            {Warning}
+            <div class="upload-container">
+                  <Form.Control type="file" onChange={(event)=> {
+                      if (event.target.files[0]['type'].split('/')[0] === 'image') {
+                      setWarning("");
+                      setImage(event.target.files[0]);
+                      let reader = new FileReader();
+                      reader.onload = function(e) {
+                        setImagePreviewUrl(e.target.result);
+                      };
+                      reader.readAsDataURL(event.target.files[0]);
+                    } else {
+                      //event.target.files[0] = undefined;
+                      setWarning("Only accept image, please upload again");
+                    }
+                    
+                  }} />
+                </div>
             <Button variant="dark" onClick={saveProduct}>Save</Button>
             <Button variant="red" onClick={deleteProduct}>Delete</Button>
+            <input type="hidden" name="csrf-nonce" value={csrfNonce}></input>
         </Form>
         </Row>
       </Container>

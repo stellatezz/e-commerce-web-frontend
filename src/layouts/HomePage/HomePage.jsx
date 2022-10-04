@@ -13,7 +13,7 @@ export default function HomePage() {
   },[])
 
   const fetchCategories = async () => {
-      await axios.get(`http://localhost:8000/api/categories`).then(({data})=>{
+      await axios.get(`https://secure.s37.ierg4210.ie.cuhk.edu.hk:3000/api/categories`).then(({data})=>{
           setCategories(data);
       })
   }
